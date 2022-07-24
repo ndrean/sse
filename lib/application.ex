@@ -30,7 +30,11 @@ defmodule SSE.Application do
       end
 
     children = [
-      {Plug.Cowboy, scheme: scheme, plug: SSE.Router, options: plug_options}
+      # {Plug.Cowboy, scheme: scheme, plug: SSE.Router, options: plug_options}
+      {Plug.Cowboy,
+       scheme: :https,
+       plug: SSE.Router,
+       options: [protocol_options: [idle_timeout: :infinity], port: 443]}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: SSE.Supervisor)
