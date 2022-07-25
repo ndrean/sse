@@ -7,7 +7,8 @@ defmodule Sse.MixProject do
       version: "0.1.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      releases: releases()
     ]
   end
 
@@ -15,7 +16,9 @@ defmodule Sse.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {SSE.Application, []}
+      mod: {SSE.Application, []},
+      include_erts: true,
+      include_executables_for: [:unix]
     ]
   end
 
@@ -25,7 +28,20 @@ defmodule Sse.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:jason, "~>1.3"},
       {:uuid, "~> 1.1"},
-      {:x509, "~> 0.8.5"}
+      {:x509, "~> 0.8.5"},
+      {:pubsub, "~> 1.1"}
+    ]
+  end
+
+  defp releases do
+    [
+      sse: [
+        include_erts: true,
+        include_executables_for: [:unix],
+        applications: [
+          sse: :permanent
+        ]
+      ]
     ]
   end
 end

@@ -19,22 +19,26 @@ defmodule SSE.Application do
             keyfile: "priv/cert/selfsigned_key.pem",
             otp_app: :sse,
             password: "SECRET"
-            # verify_fun: {&verify_fun_selfsigned_cert/3, []}
           ]
+
+        443 ->
+          [port: 443, protocol_options: [idle_timeout: :infinity]]
       end
 
     scheme =
       case app_port() do
         4000 -> :http
         4001 -> :https
+        443 -> :heroku
       end
 
     children = [
-      # {Plug.Cowboy, scheme: scheme, plug: SSE.Router, options: plug_options}
-      {Plug.Cowboy,
-       scheme: :https,
-       plug: SSE.Router,
-       options: [protocol_options: [idle_timeout: :infinity], port: 443]}
+      {Plug.Cowboy, scheme: scheme, plug: SSE.Router, options: plug_options},
+      # {Plug.Cowboy,
+      #  scheme: :https,
+      #  plug: SSE.Router,
+      #  options: [protocol_options: [idle_timeout: :infinity], port: 443]},
+      PubSub
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: SSE.Supervisor)
@@ -43,6 +47,7 @@ defmodule SSE.Application do
   defp app_port do
     System.get_env()
     |> Map.get("PORT", "4000")
+    # default value
     |> String.to_integer()
   end
 end

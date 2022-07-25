@@ -24,3 +24,10 @@ Install `:x509` in the mix and run the following to geenrate self signed certifi
 ```bash
 mix x509.gen.selfsigned
 ```
+
+SECRET_KEY_BASE=xvafzY4y01jYuzLm3ecJqo008dVnU3CN4f+MamNd1Zue4pXvfvUjbiXT8akaIF53
+
+```bash
+docker build -t sse .
+docker run -p 4000:4000 -it --rm sse
+```
