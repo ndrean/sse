@@ -14,7 +14,7 @@ RUN mix release $BUILD_NAME --quiet
 FROM alpine:latest AS app
 ARG MIX_ENV=${MIX_ENV:-prod}
 
-ENV PORT=4000
+ENV PORT=4043
 WORKDIR /opt/app
 RUN apk --update --no-cache add bash grep openssl ncurses-libs tini libstdc++ libgcc
 RUN chown -R nobody: /opt/app

@@ -3,24 +3,24 @@ defmodule Plug.SSEHeaders do
 
   def init(opt), do: opt
 
-  def call(conn, _opt) do
+  def call(conn, opt) do
     # case get_scheme() do
     #   :http ->
     #     IO.inspect(opt[:front])
 
-    #     conn
-    #     |> put_resp_header("Access-Control-Allow-Origin", opt[:front])
-    #     |> put_resp_header("Vary", "Origin")
-    #     |> put_resp_header("Cache-Control", "no-cache")
-    #     |> put_resp_header("connection", "keep-alive")
-    #     |> put_resp_header("content-type", "text/event-stream")
+    conn
+    |> put_resp_header("Access-Control-Allow-Origin", opt[:front])
+    |> put_resp_header("Vary", "Origin")
+    |> put_resp_header("Cache-Control", "no-cache")
+    |> put_resp_header("connection", "keep-alive")
+    |> put_resp_header("content-type", "text/event-stream")
 
     #   :https ->
     #     IO.puts("https")
 
-    conn
-    |> put_resp_header("connection", "keep-alive")
-    |> put_resp_header("content-type", "text/event-stream")
+    # conn
+    # |> put_resp_header("connection", "keep-alive")
+    # |> put_resp_header("content-type", "text/event-stream")
 
     # end
   end

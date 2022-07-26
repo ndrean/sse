@@ -2,8 +2,8 @@ defmodule SSE.Router do
   import Plug.Conn
   use Plug.Router
 
-  # @front "https://demo-valtio.surge.sh"
-  @front "http://localhost:3000"
+  @front "https://demo-valtio.surge.sh"
+  # @front "http://localhost:3000"
 
   plug(Plug.SSEHeaders, front: @front)
   plug(:match)
