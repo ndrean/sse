@@ -1,0 +1,10 @@
+localhost:443 {
+	handle /sse {
+		reverse_proxy https://localhost:4043
+		encode gzip
+	}
+	log {
+		output stdout
+		format console
+	}
+}

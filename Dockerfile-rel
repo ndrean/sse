@@ -1,0 +1,20 @@
+FROM  bitwalker/alpine-elixir:latest AS build
+# FROM elixir:1.13.4-alpine AS build
+ARG BUILD_NAME=sse
+WORKDIR /opt/app
+RUN mix do local.hex --force, local.rebar --force
+# COPY . .
+COPY mix.exs mix.lock ./
+COPY config /.config
+ARG MIX_ENV=${MIX_ENV:-prod}
+RUN mix do deps.get --only $MIX_ENV && mix deps.compile
+COPY lib ./lib
+COPY priv ./priv
+COPY rel ./rel/
+# RUN mix do deps.get --only $MIX_ENV && \
+RUN mix release $BUILD_NAME --quiet
+
+ENV MIX_ENV=${MIX_ENV}
+ENV BUILD_NAME=${BUILD_NAME}
+
+CMD _build/${MIX_ENV}/rel/${BUILD_NAME}/bin/${BUILD_NAME} start --no-halt

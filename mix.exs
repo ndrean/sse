@@ -26,10 +26,9 @@ defmodule Sse.MixProject do
   defp deps do
     [
       {:plug_cowboy, "~> 2.5"},
+      {:plug_crypto, "~> 1.2"},
       {:jason, "~>1.3"},
-      {:uuid, "~> 1.1"},
-      {:x509, "~> 0.8.5"},
-      {:pubsub, "~> 1.1"}
+      {:uuid, ">= 2.0.4", [hex: :uuid_erl]}
     ]
   end
 
