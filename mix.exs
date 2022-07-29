@@ -27,8 +27,10 @@ defmodule Sse.MixProject do
     [
       {:plug_cowboy, "~> 2.5"},
       {:plug_crypto, "~> 1.2"},
+      {:cors_plug, "~> 3.0"},
       {:jason, "~>1.3"},
-      {:uuid, ">= 2.0.4", [hex: :uuid_erl]}
+      {:uuid, ">= 2.0.4", [hex: :uuid_erl]},
+      {:phoenix_pubsub, "~> 2.0"}
     ]
   end
 

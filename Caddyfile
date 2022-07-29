@@ -1,8 +1,15 @@
-localhost:443 {
-	handle /sse {
-		reverse_proxy https://localhost:4043
-		encode gzip
-	}
+https://localhost:443 {
+	#@options {
+#		method OPTIONS
+#	}
+
+#	respond @options 204
+	reverse_proxy https://localhost:5043
+
+	# header /see {
+	# Access-Control-Allow-Origin *
+	# }
+	encode gzip
 	log {
 		output stdout
 		format console

@@ -14,7 +14,8 @@ defmodule SSE.Application do
     ]
 
     children = [
-      {Plug.Cowboy, scheme: :https, plug: SSE.Router, options: plug_options}
+      {Plug.Cowboy, scheme: :https, plug: SSE.Router, options: plug_options},
+      {Phoenix.PubSub, name: SSE.PS}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: SSE.Supervisor)
@@ -23,7 +24,6 @@ defmodule SSE.Application do
   defp app_port do
     System.get_env()
     |> Map.get("PORT", "4043")
-    # default value
     |> String.to_integer()
   end
 end
