@@ -26,8 +26,7 @@ defmodule SSE.Router do
 
   post "/post" do
     with params <- conn.params,
-         data <- Jason.encode!(params),
-         msg <- set_message(data) do
+         msg <- make_message(params) do
       Phoenix.PubSub.broadcast(SSE.PubSub, "post", {:post, msg})
       conn |> resp(303, "broadcasted") |> send_resp()
     end
@@ -52,7 +51,8 @@ defmodule SSE.Router do
   end
 
   defp send_letter(conn, x \\ "a") do
-    msg = Jason.encode!(%{msg: x}) |> set_message()
+    # msg = Jason.encode!(%{msg: x}) |> set_message()
+    msg = make_message(%{msg: x})
     {:ok, _conn} = chunk(conn, msg)
     :timer.sleep(5_000)
 
@@ -69,7 +69,8 @@ defmodule SSE.Router do
     |> send_chunked(200)
   end
 
-  defp set_message(data) do
+  def make_message(params) do
+    data = Jason.encode!(params)
     uuid = Uuider.uuid4()
     "event: message\ndata: #{data}\nid: #{uuid}\nretry: 6000\n\n"
   end

@@ -32,6 +32,7 @@ defmodule Sse.MixProject do
       {:jason, "~>1.3"},
       {:uuid, ">= 2.0.4", [hex: :uuid_erl]},
       {:phoenix_pubsub, "~> 2.0"},
+      {:poolboy, "~> 1.5"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:httpoison, "~> 1.8", only: [:dev, :test]},
       {:x509, "~> 0.8.5", only: [:dev, :test]}
